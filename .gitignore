@@ -1,0 +1,234 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+# --- PyCharm 本地配置 ---
+.idea/
+
+# --- 自定义名称的虚拟环境 ---
+fay/
+Fay/
+
+# --- AI 模型权重与核心文件 ---
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+models/
+weights/
+
+# --- 人体姿态数据与视频素材 ---
+*.mp4
+*.avi
+*.mkv
+*.obj
+*.fbx
+*.bvh
+dataset/
+datasets/
+# --- Unreal Engine 核心忽略规则 ---
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# UE 自动生成的项目文件和本地配置
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.opendb
+.vs/
+.vscode/
+# --- 编译产生的二进制插件 ---
+*.dll
+
+# --- Rasa 训练生成的模型包 ---
+*.tar.gz
+test/rasa/models/
+
+# --- 字体等静态资产 ---
+*.ttf
+# --- 忽略所有编译出来的程序 ---
+*.exe
+*.dll
+*.pdb
+
+# --- 忽略虚幻引擎生成的非源码文件 ---
+Intermediate/
+DerivedDataCache/
+Saved/
+Build/
+Binaries/
+*.pch
+*.obj
+*.uasset
+*.ubulk
+*.uptnl
+*.uexp
+
+# --- 忽略 FFmpeg 等工具库 ---
+ffmpeg.exe
+ffplay.exe
+ffprobe.exe
+
+# --- 忽略之前的人脸重建相关大资产 ---
+*FaceNormal*
+*FaceCavity*
+
+# --- 1. 系统与 IDE 缓存 ---
+.idea/
+__pycache__/
+*.pyc
+.DS_Store
+
+# --- 2. 运行产生的垃圾 (根据截图) ---
+bin/
+cache_data/
+dist/
+logfile/
+logs/
+fay.db
+log.txt
+
+# --- 3. 巨型 AI 模型与素材 ---
+yolov8n-pose.pt
+Deng.ttf
+songs/
+datas/
+
+# --- 4. 虚幻引擎 (assisitant 文件夹) ---
+# 建议先忽略整个 UE 文件夹，因为里面有几 GB 的缓存
+assisitant/
+# 忽略包含密钥的配置文件
+system.conf
+config.json
+*.conf
