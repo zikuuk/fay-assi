@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- index.css -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+    </link>
+    <!-- <link rel="stylesheet" href="./css/index.css"> -->
+    <!-- 引入element-ui样式 -->
+    <!-- <link rel="stylesheet" href="./css/element.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/element.css') }}">
+    </link>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.14/theme-chalk/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.css">
+
+    <title>学术助手</title>
+
+</head>
+
+<body style="zoom: 1">
+    <div id="app" style="font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,微软雅黑,Arial,sans-serif;">
+        <div class="main">
+                                <div class="right" v-if="onButton">
+                                    <div class="right_main"  style="border-radius: 30px">
+                                        <div class="container" style="border-radius: 30px">
+                                            <div style="padding: 0 15px; border-bottom: 0.5px solid #e0e0e0; display: flex; justify-content: space-between; align-items:center">
+                                                <h2 style="padding-left: 10px; padding-top: 3px">设置</h2>
+                                                <div>
+                                                    <el-button type="success" icon="el-icon-check" circle
+                                                               @click=postData() :disabled="!configEditable"></el-button>
+                                                    <el-button icon="el-icon-close" circle
+                                                               @click=closeSet()></el-button>
+                                                </div>
+                                            </div>
+                                             <div class="content">
+                                                 <div style="padding: 10px">
+                                                     <h3>消息</h3>
+                                                     <el-input v-model="panel_msg" :disabled="true"></el-input>
+                                                 </div>
+                                                 <div style="padding: 10px">
+                                                     <h3>麦克风</h3>
+                                                     <el-switch v-model="source_record_enabled" active-color="#13ce66" inactive-color="#ff4949" :disabled="!configEditable"></el-switch>
+                                                     <el-select v-model="source_record_device" placeholder="请选择" :disabled="!configEditable">
+                                                         <el-option v-for="item in device_list" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                                     </el-select>
+                                                 </div>
+                                                 <div style="padding: 10px">
+                                                     <h3>Q&A文件：</h3>
+                                                     <el-input v-model="interact_QnA" placeholder="请输入内容" :disabled="!configEditable"></el-input>
+                                                 </div>
+                                                 <div style="padding: 10px">
+                                                     <h3>使用面板播放：</h3>
+                                                     <el-switch v-model="play_sound_enabled" active-color="#13ce66" inactive-color="#ff4949" :disabled="!configEditable"></el-switch>
+                                                 </div>
+                                                 <div style="padding: 10px">
+                                                     <h3>声音选择：{{attribute_voice}}</h3>
+                                                     <el-select v-model="attribute_voice" placeholder="请选择" :disabled="!configEditable">
+                                                         <el-option v-for="item in voice_list" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                                     </el-select>
+                                                 </div>
+                                                 <div style="padding: 10px">
+                                                     <h3>敏感度：</h3>
+                                                     <el-slider v-model="interact_perception_follow" :disabled="!configEditable"></el-slider>
+                                                 </div>
+                                                 <div style="padding: 10px">
+                                                     <h3>唤醒</h3>
+                                                     <div>
+                                                         <h4>唤醒模式：</h4>
+                                                         <el-switch v-model="wake_word_enabled" active-color="#13ce66" inactive-color="#ff4949" :disabled="!configEditable"></el-switch>
+                                                     </div>
+                                                     <div>
+                                                         <h4>唤醒词：</h4>
+                                                         <el-input v-model="wake_word" placeholder="请输入内容（以,隔开）" :disabled="!configEditable"></el-input>
+                                                     </div>
+                                                     <div>
+                                                         <h4>唤醒方式：</h4>
+                                                         <el-select v-model="wake_word_type" placeholder="请选择" :disabled="!configEditable">
+                                                             <el-option v-for="item in wake_word_type_options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                                         </el-select>
+                                                     </div>
+                                                 </div>
+                                                 <div  style="padding: 10px">
+                                                     <h3>语音合成：</h3>
+                                                     <el-switch v-model="tts_enabled" active-color="#13ce66" inactive-color="#ff4949" :disabled="!configEditable"></el-switch>
+                                                 </div>
+                                                 <div  style="padding: 10px">
+                                                     <h3>人设</h3>
+                                                     <div>
+                                                         <div>
+                                                             <h4>姓名：</h4>
+                                                             <el-input v-model="attribute_name" placeholder="请输入内容" :disabled="!configEditable"></el-input>
+                                                         </div>
+                                                         <div>
+                                                             <h4>年龄：</h4>
+                                                             <el-input v-model="attribute_age" placeholder="请输入内容" :disabled="!configEditable"></el-input>
+                                                         </div>
+                                                         <div>
+                                                             <h4>出生地：</h4>
+                                                             <el-input v-model="attribute_birth" placeholder="请输入内容" :disabled="!configEditable"></el-input>
+                                                         </div>
+                                                         <div>
+                                                             <h4>生肖：</h4>
+                                                             <el-input v-model="attribute_zodiac" placeholder="请输入内容" :disabled="!configEditable"></el-input>
+                                                         </div>
+                                                         <div>
+                                                             <h4>星座：</h4>
+                                                             <el-input v-model="attribute_constellation" placeholder="请输入内容" :disabled="!configEditable"></el-input>
+                                                         </div>
+                                                         <div>
+                                                             <h4>职业：</h4>
+                                                             <el-input v-model="attribute_job" placeholder="请输入内容" :disabled="!configEditable"></el-input>
+                                                         </div>
+                                                         <div>
+                                                             <h4>联系方式：</h4>
+                                                             <el-input v-model="attribute_contact" placeholder="请输入内容" :disabled="!configEditable"></el-input>
+                                                         </div>
+                                                         <div>
+                                                             <h4>喜好：</h4>
+                                                             <el-input v-model="attribute_hobby" placeholder="请输入内容" :disabled="!configEditable"></el-input>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right" v-if="!onButton">
+                                    <div class="right_main"  style="border-radius: 30px">
+                                        <div class="container" style="border-radius: 30px">
+                                            <div style="padding: 0 15px; border-bottom: 0.5px solid #e0e0e0; display: flex; justify-content: space-between; align-items:center">
+                                                <h2 style="padding-left: 10px; padding-top: 3px">学术助手</h2>
+                                                <div>
+                                                    <el-button v-if="remote_audio_connect" icon="el-icon-mic" type="success" circle plain disabled></el-button>
+                                                    <el-button v-if="is_connect" icon="el-icon-connection" type="success" circle plain disabled></el-button>
+                                                    <el-button v-if="!source_record_enabled" icon="el-icon-microphone" circle plain></el-button>
+                                                    <el-button v-if="source_record_enabled" icon="el-icon-microphone" type="success" circle plain></el-button>
+                                                    <el-button @click=postControlEyes() icon="el-icon-camera" circle></el-button>
+                                                    <el-button @click=openSet() icon="el-icon-setting" circle></el-button>
+                                                    <el-button v-if="live_state == 1" type="danger" icon="el-icon-switch-button" circle
+                                                               @click=postStopLive()></el-button>
+                                                    <el-button v-else-if="live_state == 2" type="primary" icon="el-icon-loading" circle></el-button>
+                                                    <el-button v-else-if="live_state == 3" type="danger" icon="el-icon-loading" circle></el-button>
+                                                    <el-button v-else type="primary" icon="el-icon-switch-button" circle
+                                                               @click=postStartLive()></el-button>
+                                                </div>
+                                            </div>
+                                             <div class="content">
+                                               <div v-for="(item, index) in msg_list" :key="index">
+                                                   <div class="item item-center"><span>[[item.timetext]]</span></div>
+                                                   <div class="item item-left" v-if="item.type == 'fay'">
+                                                       <div class="avatar"><img src="{{ url_for('static',filename='to.jpg') }}"></div>
+                                                       <div class="bubble bubble-left">[[item.content]]</div>
+                                                   </div>
+                                                   <div class="item item-right" v-else>
+                                                       <div class="bubble bubble-right" style="color: whitesmoke">[[item.content]]
+                                                           <div v-if="loading && index === msg_list.length - 1" class="spinner"></div>
+                                                       </div>
+                                                       <div class="avatar"><img src="{{ url_for('static',filename='from.jpg') }}"></div>
+                                                   </div>
+                                               </div>
+                                             </div>
+
+                                            <div class="input-area">
+                                                <textarea v-model="send_msg" name="text" id="textarea" placeholder="发送些内容..."></textarea>
+                                                <div style="padding-bottom: 15px; padding-right: 15px">
+                                                    <el-button @click="send()" type="primary" icon="el-icon-top" circle></el-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        </div>
+    </div>
+</body>
+
+<!-- 开发环境vue.js -->
+<script src="{{ url_for('static',filename='js/vue.js') }}"></script>
+<!-- 发行环境vue.js -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> -->
+<!-- 引入element-ui组件库 -->
+<!-- <script src="./js/element.js"></script> -->
+<script src="{{ url_for('static',filename='js/element.js') }}"></script>
+<!-- index.js -->
+<!-- <script src="./js/index.js"></script> -->
+<!-- <script src="./js/self-adaption.js"></script> -->
+
+<script src="{{ url_for('static',filename='js/index.js') }}"></script>
+{#<script src="{{ url_for('static',filename='js/self-adaption.js') }}"></script>#}
+
+</html>
